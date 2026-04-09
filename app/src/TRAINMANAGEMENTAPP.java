@@ -1,54 +1,50 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-// Bogie class
-class Bogie {
-    String name;
-    int capacity;
+class BOGIE {
+    String TYPE;
+    int CAPACITY;
 
-    // Constructor
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    public BOGIE(String TYPE, int CAPACITY) {
+        this.TYPE = TYPE;
+        this.CAPACITY = CAPACITY;
     }
 
-    // toString() for display
+    public int GETCAPACITY() {
+        return CAPACITY;
+    }
+
     @Override
     public String toString() {
-        return name + " (Capacity: " + capacity + ")";
+        return "BOGIE TYPE: " + TYPE + ", CAPACITY: " + CAPACITY;
     }
 }
 
-// Main class
 public class TRAINMANAGEMENTAPP {
 
     public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("=== Train Consist Management App ===");
+        // LIST OF BOGIES (FROM UC7)
+        List<BOGIE> BOGIES = new ArrayList<>();
 
-        // Create list of bogies
-        List<Bogie> bogies = new ArrayList<>();
+        BOGIES.add(new BOGIE("SLEEPER", 72));
+        BOGIES.add(new BOGIE("AC CHAIR", 60));
+        BOGIES.add(new BOGIE("FIRST CLASS", 50));
+        BOGIES.add(new BOGIE("SLEEPER", 80));
+        BOGIES.add(new BOGIE("AC CHAIR", 75));
 
-        // Add bogies
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 54));
-        bogies.add(new Bogie("First Class", 24));
+        // STREAM FILTER (CAPACITY > 60)
+        List<BOGIE> FILTEREDBOGIES = BOGIES.stream()
+                .filter(B -> B.GETCAPACITY() > 60)
+                .collect(Collectors.toList());
 
-        // Display before sorting
-        System.out.println("\nBefore Sorting:");
-        System.out.println(bogies);
+        // DISPLAY OUTPUT
+        System.out.println("FILTERED BOGIES (CAPACITY > 60):");
 
-        // Sort bogies by capacity (ascending)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
-
-        // Display after sorting
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
+        if (FILTEREDBOGIES.isEmpty()) {
+            System.out.println("NO BOGIES MATCH THE CRITERIA.");
+        } else {
+            FILTEREDBOGIES.forEach(System.out::println);
         }
-
-        System.out.println("\nProgram completed...");
     }
 }
