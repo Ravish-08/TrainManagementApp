@@ -23,7 +23,7 @@ public class TRAINMANAGEMENTAPP {
 
     public static void main(String[] args) {
 
-        // LIST OF BOGIES (REUSE FROM PREVIOUS UC)
+        // CREATE LIST OF BOGIES
         List<BOGIE> BOGIES = new ArrayList<>();
 
         BOGIES.add(new BOGIE("SLEEPER", 72));
@@ -32,12 +32,12 @@ public class TRAINMANAGEMENTAPP {
         BOGIES.add(new BOGIE("SLEEPER", 80));
         BOGIES.add(new BOGIE("AC CHAIR", 75));
 
-        // 🔹 CALCULATE TOTAL SEATS USING STREAM
+        // 🔹 STREAM + MAP + REDUCE
         int TOTALSEATS = BOGIES.stream()
                 .map(B -> B.GETCAPACITY())
                 .reduce(0, Integer::sum);
 
-        // 🔹 DISPLAY RESULT
-        System.out.println("TOTAL SEATING CAPACITY OF TRAIN: " + TOTALSEATS);
+        // DISPLAY OUTPUT
+        System.out.println("TOTAL SEATING CAPACITY: " + TOTALSEATS);
     }
 }
