@@ -1,43 +1,44 @@
 import java.util.*;
-
-class BOGIE {
-    String TYPE;
-    int CAPACITY;
-
-    public BOGIE(String TYPE, int CAPACITY) {
-        this.TYPE = TYPE;
-        this.CAPACITY = CAPACITY;
-    }
-
-    public int GETCAPACITY() {
-        return CAPACITY;
-    }
-
-    @Override
-    public String toString() {
-        return "BOGIE TYPE: " + TYPE + ", CAPACITY: " + CAPACITY;
-    }
-}
+import java.util.regex.*;
 
 public class TRAINMANAGEMENTAPP {
 
     public static void main(String[] args) {
 
-        // CREATE LIST OF BOGIES
-        List<BOGIE> BOGIES = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
 
-        BOGIES.add(new BOGIE("SLEEPER", 72));
-        BOGIES.add(new BOGIE("AC CHAIR", 60));
-        BOGIES.add(new BOGIE("FIRST CLASS", 50));
-        BOGIES.add(new BOGIE("SLEEPER", 80));
-        BOGIES.add(new BOGIE("AC CHAIR", 75));
+        // INPUT FROM USER
+        System.out.print("ENTER TRAIN ID: ");
+        String TRAINID = sc.nextLine();
 
-        // 🔹 STREAM + MAP + REDUCE
-        int TOTALSEATS = BOGIES.stream()
-                .map(B -> B.GETCAPACITY())
-                .reduce(0, Integer::sum);
+        System.out.print("ENTER CARGO CODE: ");
+        String CARGOCODE = sc.nextLine();
 
-        // DISPLAY OUTPUT
-        System.out.println("TOTAL SEATING CAPACITY: " + TOTALSEATS);
+        // REGEX PATTERNS
+        String TRAIN_PATTERN = "TRN-\\d{4}";
+        String CARGO_PATTERN = "PET-[A-Z]{2}";
+
+        // COMPILE PATTERN
+        Pattern trainPattern = Pattern.compile(TRAIN_PATTERN);
+        Pattern cargoPattern = Pattern.compile(CARGO_PATTERN);
+
+        // MATCHER
+        Matcher trainMatcher = trainPattern.matcher(TRAINID);
+        Matcher cargoMatcher = cargoPattern.matcher(CARGOCODE);
+
+        // VALIDATION
+        if (trainMatcher.matches()) {
+            System.out.println("TRAIN ID IS VALID");
+        } else {
+            System.out.println("INVALID TRAIN ID");
+        }
+
+        if (cargoMatcher.matches()) {
+            System.out.println("CARGO CODE IS VALID");
+        } else {
+            System.out.println("INVALID CARGO CODE");
+        }
+
+        sc.close();
     }
 }
