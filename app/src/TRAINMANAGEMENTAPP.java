@@ -10,6 +10,10 @@ class BOGIE {
         this.CAPACITY = CAPACITY;
     }
 
+    public String GETTYPE() {
+        return TYPE;
+    }
+
     public int GETCAPACITY() {
         return CAPACITY;
     }
@@ -24,7 +28,7 @@ public class TRAINMANAGEMENTAPP {
 
     public static void main(String[] args) {
 
-        // LIST OF BOGIES (FROM UC7)
+        // LIST OF BOGIES (REUSE FROM UC8)
         List<BOGIE> BOGIES = new ArrayList<>();
 
         BOGIES.add(new BOGIE("SLEEPER", 72));
@@ -33,18 +37,20 @@ public class TRAINMANAGEMENTAPP {
         BOGIES.add(new BOGIE("SLEEPER", 80));
         BOGIES.add(new BOGIE("AC CHAIR", 75));
 
-        // STREAM FILTER (CAPACITY > 60)
-        List<BOGIE> FILTEREDBOGIES = BOGIES.stream()
-                .filter(B -> B.GETCAPACITY() > 60)
-                .collect(Collectors.toList());
+        // 🔹 GROUPING USING STREAM API
+        Map<String, List<BOGIE>> GROUPEDBOGIES = BOGIES.stream()
+                .collect(Collectors.groupingBy(B -> B.GETTYPE()));
 
-        // DISPLAY OUTPUT
-        System.out.println("FILTERED BOGIES (CAPACITY > 60):");
+        // 🔹 DISPLAY GROUPED RESULT
+        System.out.println("GROUPED BOGIES BY TYPE:");
 
-        if (FILTEREDBOGIES.isEmpty()) {
-            System.out.println("NO BOGIES MATCH THE CRITERIA.");
+        if (GROUPEDBOGIES.isEmpty()) {
+            System.out.println("NO BOGIES AVAILABLE.");
         } else {
-            FILTEREDBOGIES.forEach(System.out::println);
+            for (Map.Entry<String, List<BOGIE>> ENTRY : GROUPEDBOGIES.entrySet()) {
+                System.out.println("\nTYPE: " + ENTRY.getKey());
+                ENTRY.getValue().forEach(System.out::println);
+            }
         }
     }
 }
